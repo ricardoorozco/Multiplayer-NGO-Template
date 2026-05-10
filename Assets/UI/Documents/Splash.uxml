@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
+    <Style src="../Styles/MainStyles.uss" />
+    <ui:VisualElement class="screen-container">
+        <ui:Label text="CARGANDO..." class="title-text" />
+        <ui:ProgressBar name="PrgLoading" value="0" high-value="100" style="width: 300px; margin-top: 20px;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
+    <Style src="../Styles/MainStyles.uss" />
+    <ui:VisualElement class="screen-container">
+        <ui:VisualElement class="glass-panel" style="width: 600px;">
+            <ui:Label text="SALA DE ESPERA" class="title-text" style="font-size: 48px;" />
+            <ui:Label name="LblJoinCode" text="Código: ---" class="subtitle-text" />
+            
+            <ui:VisualElement style="flex-direction: row; justify-content: space-between; width: 100%; margin-bottom: 20px;">
+                <ui:Button name="BtnHost" text="Crear Partida" class="primary-button" style="width: 48%;" />
+                <ui:VisualElement style="width: 48%;">
+                    <ui:TextField name="TxtJoinCode" style="margin-bottom: 10px; height: 50px; font-size: 20px;" />
+                    <ui:Button name="BtnClient" text="Unirse" class="primary-button" style="width: 100%; margin-top: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Label text="Jugadores:" class="subtitle-text" style="font-size: 20px; align-self: flex-start; margin-bottom: 5px;" />
+            <ui:ScrollView name="SvPlayers" style="height: 150px; width: 100%; background-color: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 20px; padding: 10px;" />
+
+            <ui:Button name="BtnStartGame" text="Iniciar Juego" class="primary-button" style="display: none;" />
+            <ui:Button name="BtnBack" text="Volver al Menú" class="secondary-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

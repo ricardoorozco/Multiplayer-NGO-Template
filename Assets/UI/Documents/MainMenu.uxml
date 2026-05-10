@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="../Styles/MainStyles.uss" />
+
+    <ui:VisualElement class="screen-container">
+        
+        <ui:VisualElement class="glass-panel">
+            <ui:Label text="NGO TEMPLATE" class="title-text" />
+            <ui:Label text="Multiplayer Base Project" class="subtitle-text" />
+            
+            <ui:Button name="BtnPlay" text="Jugar" class="primary-button" />
+            <ui:Button name="BtnOptions" text="Opciones" class="secondary-button" />
+            <ui:Button name="BtnQuit" text="Salir" class="secondary-button" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

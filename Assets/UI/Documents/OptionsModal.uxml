@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
+
+    <Style src="../Styles/MainStyles.uss" />
+
+    <ui:VisualElement name="ModalOverlay" class="modal-overlay hidden">
+        <ui:VisualElement class="modal-content">
+            <ui:Label text="OPCIONES" class="title-text" style="font-size: 32px;" />
+            
+            <ui:VisualElement style="margin-top: 20px;">
+                <ui:Label text="Sonido" class="subtitle-text" style="font-size: 20px; margin-bottom: 10px;" />
+                <ui:Slider name="SldMasterVolume" label="Volumen Maestro" high-value="100" />
+                <ui:Slider name="SldMusicVolume" label="Música" high-value="100" />
+                <ui:Slider name="SldSFXVolume" label="SFX" high-value="100" />
+            </ui:VisualElement>
+
+            <ui:VisualElement style="margin-top: 20px;">
+                <ui:Label text="Pantalla y Gráficos" class="subtitle-text" style="font-size: 20px; margin-bottom: 10px;" />
+                <ui:Toggle name="TglFullScreen" label="Pantalla Completa" />
+                <!-- Para propósitos de plantilla, un slider simple para calidad -->
+                <ui:SliderInt name="SldQuality" label="Calidad Gráfica" low-value="0" high-value="2" />
+            </ui:VisualElement>
+
+            <ui:Button name="BtnCloseOptions" text="Cerrar y Guardar" class="primary-button" style="width: 100%; margin-top: 30px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+
+</ui:UXML>
