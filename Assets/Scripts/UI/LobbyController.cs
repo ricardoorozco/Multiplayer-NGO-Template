@@ -13,6 +13,9 @@ namespace MultiplayerTemplate.UI
         private Button btnStartGame;
         private Button btnHost;
         private Button btnClient;
+        private Button btnCopyCode;
+
+        private string currentJoinCode = "";
 
         private void OnEnable()
         {
@@ -24,11 +27,13 @@ namespace MultiplayerTemplate.UI
             btnHost = root.Q<Button>("BtnHost");
             btnClient = root.Q<Button>("BtnClient");
             btnStartGame = root.Q<Button>("BtnStartGame");
+            btnCopyCode = root.Q<Button>("BtnCopyCode");
             var btnBack = root.Q<Button>("BtnBack");
 
             btnHost?.RegisterCallback<ClickEvent>(ev => OnHostClicked());
             btnClient?.RegisterCallback<ClickEvent>(ev => OnClientClicked());
             btnStartGame?.RegisterCallback<ClickEvent>(ev => OnStartGameClicked());
+            btnCopyCode?.RegisterCallback<ClickEvent>(ev => OnCopyClicked());
             btnBack?.RegisterCallback<ClickEvent>(ev => OnBackClicked());
         }
 
@@ -48,8 +53,14 @@ namespace MultiplayerTemplate.UI
             
             if (!string.IsNullOrEmpty(joinCode))
             {
+                currentJoinCode = joinCode;
                 lblJoinCode.text = $"Código de Sala: {joinCode}";
                 btnStartGame.style.display = DisplayStyle.Flex; // Mostrar botón de iniciar para el host
+                if (btnCopyCode != null)
+                {
+                    btnCopyCode.text = "Copiar";
+                    btnCopyCode.style.display = DisplayStyle.Flex;
+                }
             }
             else
             {
@@ -75,7 +86,13 @@ namespace MultiplayerTemplate.UI
                 
                 if (success)
                 {
+                    currentJoinCode = code;
                     lblJoinCode.text = "✓ Conectado. Esperando al Host...";
+                    if (btnCopyCode != null)
+                    {
+                        btnCopyCode.text = "Copiar";
+                        btnCopyCode.style.display = DisplayStyle.Flex;
+                    }
                 }
                 else
                 {
@@ -87,6 +104,18 @@ namespace MultiplayerTemplate.UI
             else
             {
                 lblJoinCode.text = "⚠ Ingresa un código de sala.";
+            }
+        }
+
+        private void OnCopyClicked()
+        {
+            if (!string.IsNullOrEmpty(currentJoinCode))
+            {
+                GUIUtility.systemCopyBuffer = currentJoinCode;
+                if (btnCopyCode != null)
+                {
+                    btnCopyCode.text = "¡Copiado!";
+                }
             }
         }
 

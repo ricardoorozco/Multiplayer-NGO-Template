@@ -4,7 +4,10 @@
     <ui:VisualElement class="screen-container">
         <ui:VisualElement class="glass-panel" style="width: 600px;">
             <ui:Label text="SALA DE ESPERA" class="title-text" style="font-size: 48px;" />
-            <ui:Label name="LblJoinCode" text="Código: ---" class="subtitle-text" />
+            <ui:VisualElement style="flex-direction: row; align-items: center; margin-bottom: 40px;">
+                <ui:Label name="LblJoinCode" text="Código: ---" class="subtitle-text" style="margin-bottom: 0;" />
+                <ui:Button name="BtnCopyCode" text="Copiar" class="secondary-button" style="width: 100px; padding-top: 5px; padding-bottom: 5px; margin-top: 0; margin-bottom: 0; margin-left: 20px; font-size: 16px; display: none;" />
+            </ui:VisualElement>
             
             <ui:VisualElement style="flex-direction: row; justify-content: space-between; width: 100%; margin-bottom: 20px;">
                 <ui:Button name="BtnHost" text="Crear Partida" class="primary-button" style="width: 48%;" />
