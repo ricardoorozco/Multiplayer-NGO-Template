@@ -4,6 +4,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using System.Linq;
 using UnityEngine;
 
 namespace MultiplayerTemplate.Networking
@@ -35,8 +36,17 @@ namespace MultiplayerTemplate.Networking
                 Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxPlayers - 1);
                 string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-                RelayServerData relayServerData = new RelayServerData(allocation, "dtls");
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+                var dtlsEndpoint = allocation.ServerEndpoints.FirstOrDefault(e => e.ConnectionType == "dtls");
+                if (dtlsEndpoint == null) throw new System.Exception("No se encontró el endpoint DTLS");
+
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetHostRelayData(
+                    dtlsEndpoint.Host,
+                    (ushort)dtlsEndpoint.Port,
+                    allocation.AllocationIdBytes,
+                    allocation.Key,
+                    allocation.ConnectionData,
+                    isSecure: true
+                );
 
                 NetworkManager.Singleton.StartHost();
                 return joinCode;
@@ -57,8 +67,18 @@ namespace MultiplayerTemplate.Networking
             {
                 JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-                RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+                var dtlsEndpoint = joinAllocation.ServerEndpoints.FirstOrDefault(e => e.ConnectionType == "dtls");
+                if (dtlsEndpoint == null) throw new System.Exception("No se encontró el endpoint DTLS");
+
+                NetworkManager.Singleton.GetComponent<UnityTransport>().SetClientRelayData(
+                    dtlsEndpoint.Host,
+                    (ushort)dtlsEndpoint.Port,
+                    joinAllocation.AllocationIdBytes,
+                    joinAllocation.Key,
+                    joinAllocation.ConnectionData,
+                    joinAllocation.HostConnectionData,
+                    isSecure: true
+                );
 
                 return NetworkManager.Singleton.StartClient();
             }

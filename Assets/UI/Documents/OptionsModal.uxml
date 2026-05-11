@@ -21,8 +21,7 @@
             <ui:VisualElement style="margin-top: 20px;">
                 <ui:Label text="Pantalla y Gráficos" class="subtitle-text" style="font-size: 20px; margin-bottom: 10px;" />
                 <ui:Toggle name="TglFullScreen" label="Pantalla Completa" />
-                <!-- Para propósitos de plantilla, un slider simple para calidad -->
-                <ui:SliderInt name="SldQuality" label="Calidad Gráfica" low-value="0" high-value="2" />
+                <ui:DropdownField name="DrpQuality" label="Calidad Gráfica" />
             </ui:VisualElement>
 
             <ui:Button name="BtnCloseOptions" text="Cerrar y Guardar" class="primary-button" style="width: 100%; margin-top: 30px;" />

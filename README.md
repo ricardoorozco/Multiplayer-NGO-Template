@@ -12,6 +12,10 @@ Una plantilla base, robusta y lista para producción para construir juegos multi
 | Networking Core | Netcode for GameObjects (NGO) | `com.unity.netcode.gameobjects` | 2.11.2 |
 | Relay, Lobby & Auth | Unity Services Multiplayer | `com.unity.services.multiplayer` | 2.2.2 |
 | Herramientas | Unity Multiplayer Center | `com.unity.multiplayer.center` | 1.0.1 |
+| Herramientas | Multiplayer Play Mode | `com.unity.multiplayer.playmode` | 2.0.2 |
+| Cámaras | Cinemachine | `com.unity.cinemachine` | 3.1.6 |
+| Level Design | ProBuilder | `com.unity.probuilder` | 6.0.9 |
+| Assets | Addressables | `com.unity.addressables` | 2.9.1 |
 | Render Pipeline | Universal Render Pipeline (URP) | `com.unity.render-pipelines.universal` | 17.3.0 |
 | Interfaz de Usuario | UI Toolkit (`.uxml` + `.uss`) | `com.unity.modules.uielements` | 1.0.0 |
 | Controles | New Input System | `com.unity.inputsystem` | 1.19.0 |
@@ -144,7 +148,7 @@ Para que Unity Relay funcione correctamente:
 | **Singleton** | Los managers globales (`NetworkManager`, `OptionsModalController`) usan el patrón Singleton. |
 | **Persistencia de Opciones** | `PlayerPrefs` con claves tipadas: `MasterVol`, `MusicVol`, `SFXVol`, `FullScreen`, `Quality`. |
 | **Nombres de Escenas** | Siempre referenciar por nombre (`string`), nunca por índice. |
-| **Prefijos UXML** | Botones: `Btn`, Sliders: `Sld`, Toggles: `Tgl`, Paneles: `Pnl`. |
+| **Prefijos UXML** | Botones: `Btn`, Sliders: `Sld`, Toggles: `Tgl`, Dropdowns: `Drp`, Paneles: `Pnl`. |
 
 ---
 
@@ -168,8 +172,14 @@ Para que Unity Relay funcione correctamente:
 
 ## ⚠️ Notas Técnicas Importantes
 
-### Volumen de Audio
-El `OptionsModalController` gestiona el volumen con sliders de `0` a `100`. Internamente esto se convierte a `0.0 – 1.0` y se aplica a `AudioListener.volume`, que es el control global de audio de Unity. Para música y SFX por separado, conecta los valores a los `AudioMixer` de tu juego desde el método `ApplySettings()`.
+### Volumen de Audio e Interacción en Tiempo Real
+El `OptionsModalController` gestiona el volumen con sliders de `0` a `100`. Internamente, esto se convierte a decibelios (dB) mediante la fórmula matemática `log10(linear) * 20f` y se aplica en tiempo real a los grupos expuestos de un `AudioMixer` (`MasterVolume`, `MusicVolume`, `SFXVolume`). Si no se asigna un `AudioMixer` en el Inspector, el sistema funciona en modo degradado controlando únicamente `AudioListener.volume`.
+
+### Calidad Gráfica y URP
+La selección de gráficos utiliza un `DropdownField` ("Bajo", "Medio", "Alto") cuyos índices (0, 1, 2) mapean directamente a los *Quality Levels* de Unity. Al usar Universal Render Pipeline (URP), la calidad real no se define en esta pantalla, sino asignando un `URP Asset` diferente a cada nivel de calidad en `Edit → Project Settings → Quality`.
+
+### API Moderna de Unity Relay
+El `RelayManager` configura Netcode extrayendo manualmente el endpoint seguro (`dtls`) de la asignación y usando los métodos directos `SetHostRelayData` / `SetClientRelayData` del `UnityTransport`. Esto evita el uso de la estructura `RelayServerData`, previniendo errores de compilación (`CS1729`) en las versiones recientes del SDK Multiplayer (2.2+).
 
 ### Ciclo de Vida de la Conexión
 El `ConnectionManager` usa `OnClientStopped` (no `OnClientDisconnectCallback`) para detectar cuándo el **cliente local** pierde su propia conexión. Esto evita el bug clásico donde el Host recibe un callback por cada cliente que se desconecta y termina siendo redirigido al menú incorrectamente.

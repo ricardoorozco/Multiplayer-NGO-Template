@@ -135,12 +135,19 @@
 }
 
 /* Controles de Formulario */
-.unity-slider__label {
+.unity-base-field__label {
     color: var(--color-text-main);
     font-size: var(--font-size-body);
 }
 
-.unity-toggle__label {
-    color: var(--color-text-main);
+.unity-base-popup-field__text {
     font-size: var(--font-size-body);
+    color: var(--color-text-main);
+}
+
+.unity-popup-field__input {
+    background-color: var(--color-surface-glass);
+    border-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    color: var(--color-text-main);
 }
